@@ -5,8 +5,17 @@ import 'package:travel_track/models/start_stop.dart';
 import 'package:travel_track/transport_type_switch.dart';
 import 'package:travel_track/models/transport_type.dart';
 
-class ControlPanel extends StatelessWidget {
+class ControlPanel extends StatefulWidget {
   const ControlPanel({super.key});
+
+  @override
+  State<ControlPanel> createState() {
+    return _ControlPanelState();
+  }
+}
+
+class _ControlPanelState extends State<ControlPanel> {
+  TransportType currentTransportType = defaultTransportType();
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +30,15 @@ class ControlPanel extends StatelessWidget {
   }
 
   void onTransportType(TransportType tt) {
-    print("Selected: $tt");
+    currentTransportType = tt;
+    // TODO: if is already tracking, stop current one and start tracking the selected transport type
   }
 
   void onStartStop(StartStop ss) {
     if (ss == .start) {
-      Tracking().startTracking(.bus);
+      Tracking().startTracking(currentTransportType);
     } else {
-      Tracking().stopTracking(.bus);
+      Tracking().stopTracking(currentTransportType);
     }
   }
 }

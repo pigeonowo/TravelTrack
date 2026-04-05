@@ -18,3 +18,7 @@ String transportTypeToString(TransportType tt) {
     //_ => "Unknown Transporttype"
   };
 }
+
+TransportType defaultTransportType() {
+  return .walking;
+}

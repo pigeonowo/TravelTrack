@@ -18,7 +18,7 @@ class _TransportTypeSwitchState extends State<TransportTypeSwitch> {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
-      initialSelection: TransportType.walking,
+      initialSelection: defaultTransportType(),
       onSelected: onSelected,
       dropdownMenuEntries: [
         for (var tt in TransportType.values)
