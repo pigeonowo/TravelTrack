@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("Cur dir: ${Directory.current}");
-    var banner = File("./test-banner.png");
+    var banner = Image.asset("assets/test-banner.png");
 
     return MaterialApp(
       home: Scaffold(
@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
               "Total time spend Travelin...", 
               style: TextStyle(fontWeight: .bold, fontSize: 18),
             ),
-            Image.file(banner),
+            banner,
             Text(
               "Spend XXX hours with XXX",
               style: TextStyle(fontWeight: .bold, fontSize: 18),
@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
             Row(children: [
               Icon(Icons.arrow_left),
               Expanded(
-                child: Image.file(banner),
+                child: banner,
               ),
               Icon(Icons.arrow_right),
             ],),
