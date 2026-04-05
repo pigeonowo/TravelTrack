@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_track/models/tracking.dart';
 import 'package:travel_track/start_stop_button.dart';
 import 'package:travel_track/models/start_stop.dart';
 import 'package:travel_track/transport_type_switch.dart';
@@ -25,9 +26,9 @@ class ControlPanel extends StatelessWidget {
 
   void onStartStop(StartStop ss) {
     if (ss == .start) {
-      print("Started...");
+      Tracking().startTracking(.bus);
     } else {
-      print("Stopped...");
+      Tracking().stopTracking(.bus);
     }
   }
 }
