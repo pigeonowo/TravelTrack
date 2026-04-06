@@ -15,16 +15,14 @@ class ControlPanel extends StatefulWidget {
 }
 
 class _ControlPanelState extends State<ControlPanel> {
-  TransportType currentTransportType = defaultTransportType();
+  TransportType currentTransportType = TransportType.defaultType();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TransportTypeSwitch(onSelected: onTransportType),
-        Center(
-          child: StartStopButton(onPressed: onStartStop),
-        ),
+        Center(child: StartStopButton(onPressed: onStartStop)),
       ],
     );
   }

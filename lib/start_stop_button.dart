@@ -17,25 +17,13 @@ class _StartStopButtonState extends State<StartStopButton> {
 
   @override
   Widget build(BuildContext context) {
-    String t;
-    if (state == .start) {
-      t = "Start";
-    } else {
-      t = "Stop";
-    }
-    
-
-    return TextButton(onPressed: onPressed, child: Text(t));
+    return TextButton(onPressed: onPressed, child: Text(state.toString()));
   }
 
   void onPressed() {
     widget.onPressed(state);
     setState(() {
-      if (state == .start) {
-        state = .stop;
-      } else {
-        state = .start;
-      }
+      state = ~state;
     });
   }
 }

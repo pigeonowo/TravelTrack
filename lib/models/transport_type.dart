@@ -4,21 +4,22 @@ enum TransportType {
   bus,
   car,
   train,
-  plane,
-}
+  plane;
 
-String transportTypeToString(TransportType tt) {
-  return switch (tt) {
-    .walking => "Walking",
-    .bus => "Bus",
-    .car => "Car",
-    .plane => "Plane",
-    .waiting => "Waiting",
-    .train => "Train",
-    //_ => "Unknown Transporttype"
-  };
-}
+  static TransportType defaultType() {
+    return .walking;
+  }
 
-TransportType defaultTransportType() {
-  return .walking;
+  @override
+  String toString() {
+    return switch (this) {
+      .walking => "Walking",
+      .bus => "Bus",
+      .car => "Car",
+      .plane => "Plane",
+      .waiting => "Waiting",
+      .train => "Train",
+      //_ => "Unknown Transporttype"
+    };
+  }
 }

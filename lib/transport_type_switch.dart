@@ -18,12 +18,12 @@ class _TransportTypeSwitchState extends State<TransportTypeSwitch> {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
-      initialSelection: defaultTransportType(),
+      initialSelection: TransportType.defaultType(),
       onSelected: onSelected,
       dropdownMenuEntries: [
         for (var tt in TransportType.values)
-          DropdownMenuEntry(label: transportTypeToString(tt), value: tt),
-      ]
+          DropdownMenuEntry(label: tt.toString(), value: tt),
+      ],
     );
   }
 
