@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:travel_track/models/tracking_data.dart';
 import 'package:travel_track/models/transport_type.dart';
 
 class TransportTypeStatDisplay extends StatelessWidget {
   const TransportTypeStatDisplay({
     super.key,
     required this.transportType,
-    required this.hours,
+    required this.seconds,
   });
 
   final TransportType transportType;
-  final double hours;
+  final Seconds seconds;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class TransportTypeStatDisplay extends StatelessWidget {
                 ),
               ),
               Text(
-                "$hours Hours",
+                "${(seconds / 60 / 60).toStringAsFixed(1)} Hours",
                 style: TextStyle(
                   fontWeight: .bold,
                   fontSize: 16,

@@ -1,26 +1,57 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:travel_track/control_panel.dart';
-import "dart:io";
 
 import 'package:travel_track/image_background.dart';
+import 'package:travel_track/models/tracking.dart';
+import 'package:travel_track/models/tracking_data.dart';
 import 'package:travel_track/transport_type_stat_display.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  runApp(MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  @override
+  void initState() {
+    super.initState();
+    Isolate.spawn(_initState, null);
+  }
+
+  void _initState(Object? _) {
+    setState(() async {
+      trackingData = await .getInstance();
+      tracking = await .getInstance();
+    });
+  }
+
+  TrackingData? trackingData;
+  Tracking? tracking;
+
+  @override
   Widget build(BuildContext context) {
-    print("Cur dir: ${Directory.current}");
     const bannerPath = "assets/test-banner.png";
     const backgroundImageTextStyle = TextStyle(
       fontWeight: .bold,
       fontSize: 18,
       color: Colors.white,
     );
+
+    if (tracking != null) {
+      print("Tracking is not null! Updating!");
+      //tracking?.recordTime(.walking, 600);
+      //tracking?.recordTime(.bus, 2832);
+      //tracking?.recordTime(.plane, 832);
+      //tracking?.recordTime(.waiting, 9832);
+    }
 
     return MaterialApp(
       home: Scaffold(
@@ -38,7 +69,10 @@ class MainApp extends StatelessWidget {
                     "Total time spend Traveling:",
                     style: backgroundImageTextStyle,
                   ),
-                  Text("100.5 Hours", style: backgroundImageTextStyle),
+                  Text(
+                    "${(trackingData != null ? trackingData!.getTotal() / 60 / 60 : 0).toStringAsFixed(1)} Hours",
+                    style: backgroundImageTextStyle,
+                  ),
                 ],
               ),
             ),
@@ -53,15 +87,19 @@ class MainApp extends StatelessWidget {
                     children: [
                       TransportTypeStatDisplay(
                         transportType: .walking,
-                        hours: 7,
+                        seconds: trackingData != null
+                            ? trackingData![.walking]
+                            : 0,
                       ),
                       TransportTypeStatDisplay(
                         transportType: .waiting,
-                        hours: 130.3,
+                        seconds: trackingData != null
+                            ? trackingData![.waiting]
+                            : 0,
                       ),
                       TransportTypeStatDisplay(
                         transportType: .car,
-                        hours: 2300.3,
+                        seconds: trackingData != null ? trackingData![.car] : 0,
                       ),
                     ],
                   ),
@@ -70,13 +108,20 @@ class MainApp extends StatelessWidget {
                     children: [
                       TransportTypeStatDisplay(
                         transportType: .bus,
-                        hours: 32.7,
+                        seconds: trackingData != null ? trackingData![.bus] : 0,
                       ),
                       //TransportTypeStatDisplay(transportType: .bus, hours: 11.3),
-                      TransportTypeStatDisplay(transportType: .plane, hours: 5),
+                      TransportTypeStatDisplay(
+                        transportType: .plane,
+                        seconds: trackingData != null
+                            ? trackingData![.plane]
+                            : 0,
+                      ),
                       TransportTypeStatDisplay(
                         transportType: .train,
-                        hours: 190,
+                        seconds: trackingData != null
+                            ? trackingData![.train]
+                            : 0,
                       ),
                     ],
                   ),

@@ -32,11 +32,12 @@ class _ControlPanelState extends State<ControlPanel> {
     // TODO: if is already tracking, stop current one and start tracking the selected transport type
   }
 
-  void onStartStop(StartStop ss) {
+  void onStartStop(StartStop ss) async {
+    var i = await Tracking.getInstance();
     if (ss == .start) {
-      Tracking().startTracking(currentTransportType);
+      i.startTracking(currentTransportType);
     } else {
-      Tracking().stopTracking(currentTransportType);
+      i.stopTracking(currentTransportType);
     }
   }
 }
