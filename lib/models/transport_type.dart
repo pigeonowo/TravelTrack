@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum TransportType {
   walking,
   waiting,
@@ -20,6 +22,17 @@ enum TransportType {
       .waiting => "Waiting",
       .train => "Train",
       //_ => "Unknown Transporttype"
+    };
+  }
+
+  Color toColor() {
+    return switch (this) {
+      .car => Colors.blue,
+      .bus => Colors.purple,
+      .plane => const Color.fromARGB(255, 225, 199, 0),
+      .train => Colors.red,
+      .waiting => Colors.green,
+      .walking => const Color.fromARGB(255, 46, 181, 147),
     };
   }
 }
