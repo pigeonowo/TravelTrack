@@ -1,5 +1,3 @@
-import 'dart:isolate';
-
 import 'package:flutter/material.dart';
 import 'package:travel_track/control_panel.dart';
 
@@ -23,13 +21,15 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
-    Isolate.spawn(_initState, null);
+    _initState();
   }
 
-  void _initState(Object? _) {
-    setState(() async {
-      trackingData = await .getInstance();
-      tracking = await .getInstance();
+  void _initState() async {
+    var td = await TrackingData.getInstance();
+    var trcking = await Tracking.getInstance();
+    setState(() {
+      trackingData = td;
+      tracking = trcking;
     });
   }
 
@@ -44,14 +44,6 @@ class _MainAppState extends State<MainApp> {
       fontSize: 18,
       color: Colors.white,
     );
-
-    if (tracking != null) {
-      print("Tracking is not null! Updating!");
-      //tracking?.recordTime(.walking, 600);
-      //tracking?.recordTime(.bus, 2832);
-      //tracking?.recordTime(.plane, 832);
-      //tracking?.recordTime(.waiting, 9832);
-    }
 
     return MaterialApp(
       home: Scaffold(
