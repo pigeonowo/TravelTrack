@@ -24,6 +24,8 @@ class _MainAppState extends State<MainApp> {
     _initState();
   }
 
+  // Note to self: when needing to do async initializing of state,
+  // put it in an extra async function and no async closures are allowed in setState
   void _initState() async {
     var td = await TrackingData.getInstance();
     var trcking = await Tracking.getInstance();
