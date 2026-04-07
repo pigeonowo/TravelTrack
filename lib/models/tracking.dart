@@ -1,23 +1,35 @@
+import 'dart:async';
+
 import 'package:travel_track/models/transport_type.dart';
+import 'package:travel_track/models/tracking_data.dart';
 
-typedef Seconds = int;
-
+/// Singleton that handles the "live tracking" of how much time has passed.
+///
+/// It uses [TrackingData] to store the data.
 class Tracking {
-  factory Tracking() {
-    _instance ??= Tracking._makeInstance();
+  static Future<Tracking> getInstance() async {
+    var td = await TrackingData.getInstance();
+    _instance ??= Tracking._makeInstance(td);
     return _instance!;
   }
-  Tracking._makeInstance();
+
+  Tracking._makeInstance(this.trackingData);
 
   static Tracking? _instance;
 
-  Map<TransportType, Seconds> traveldata = {};
+  final TrackingData trackingData;
+  TransportType? currentlyTracking;
+  Timer? currentlyTrackingTimer;
 
   void recordTime(TransportType tt, Seconds amount) {
-    traveldata.putIfAbsent(tt, () => 0);
-    traveldata[tt] = traveldata[tt]! + amount;
+    trackingData[tt] = trackingData[tt] + amount;
   }
 
-  void startTracking(TransportType tt) {}
+  void startTracking(TransportType tt) {
+    currentlyTrackingTimer = Timer.periodic(.new(seconds: 1), (timer) {
+      print("Hi");
+    });
+  }
+
   void stopTracking(TransportType tt) {}
 }
