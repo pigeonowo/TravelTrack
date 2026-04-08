@@ -17,7 +17,14 @@ class _StartStopButtonState extends State<StartStopButton> {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(onPressed: onPressed, child: Text(state.toString()));
+    return ElevatedButton(
+      style: ButtonStyle(
+        fixedSize: .all(.new(150, 50)),
+        backgroundColor: .all(const Color.fromARGB(255, 216, 243, 255)),
+      ),
+      onPressed: onPressed,
+      child: Text(state.toString()),
+    );
   }
 
   void onPressed() {

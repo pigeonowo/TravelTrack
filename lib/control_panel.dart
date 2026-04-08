@@ -24,12 +24,11 @@ class _ControlPanelState extends State<ControlPanel> {
   void initState() {
     super.initState();
     Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        
-      });
+      setState(() {});
     });
     _initState();
   }
+
   void _initState() async {
     tracking = await .getInstance();
   }
@@ -38,16 +37,22 @@ class _ControlPanelState extends State<ControlPanel> {
 
   @override
   Widget build(BuildContext context) {
-    int minutes = (tracking != null ? tracking!.timeTracked / 60 : 0).truncate();
+    int minutes = (tracking != null ? tracking!.timeTracked / 60 : 0)
+        .truncate();
     int seconds = tracking != null ? tracking!.timeTracked % 60 : 0;
     return Column(
       children: [
-        Center(child: tracking != null
-          ? Text("$minutes:${seconds.toString().padLeft(2, "0")} minutes travelling...")
-          : Text("")
+        Center(
+          child: tracking != null
+              ? Text(
+                  "$minutes:${seconds.toString().padLeft(2, "0")} minutes travelling...",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )
+              : Text(""),
         ),
-        Container(height: 10,),
+        Container(height: 30),
         TransportTypeSwitch(onSelected: onTransportType),
+        Container(height: 10),
         Center(child: StartStopButton(onPressed: onStartStop)),
       ],
     );

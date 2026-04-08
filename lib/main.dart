@@ -52,6 +52,13 @@ class _MainAppState extends State<MainApp> {
     );
 
     return MaterialApp(
+      theme: ThemeData(
+        colorScheme: .fromSeed(seedColor: Colors.blue),
+        textTheme: TextTheme(),
+        buttonTheme: ButtonThemeData(
+          buttonColor: const Color.fromARGB(255, 216, 243, 255),
+        ),
+      ),
       home: Scaffold(
         appBar: AppBar(title: Text("TravelTrack")),
         body: Column(
@@ -98,7 +105,9 @@ class _MainAppState extends State<MainApp> {
                         ),
                         TransportTypeStatDisplay(
                           transportType: .car,
-                          seconds: trackingData != null ? trackingData![.car] : 0,
+                          seconds: trackingData != null
+                              ? trackingData![.car]
+                              : 0,
                         ),
                       ],
                     ),
@@ -107,7 +116,9 @@ class _MainAppState extends State<MainApp> {
                       children: [
                         TransportTypeStatDisplay(
                           transportType: .bus,
-                          seconds: trackingData != null ? trackingData![.bus] : 0,
+                          seconds: trackingData != null
+                              ? trackingData![.bus]
+                              : 0,
                         ),
                         //TransportTypeStatDisplay(transportType: .bus, hours: 11.3),
                         TransportTypeStatDisplay(

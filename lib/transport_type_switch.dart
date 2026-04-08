@@ -18,6 +18,13 @@ class _TransportTypeSwitchState extends State<TransportTypeSwitch> {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
+      menuStyle: MenuStyle(
+        backgroundColor: .all(const Color.fromARGB(255, 228, 246, 253)),
+      ),
+      inputDecorationTheme: InputDecorationThemeData(
+        fillColor: const Color.fromARGB(255, 216, 243, 255),
+        border: OutlineInputBorder(borderRadius: const .all(.circular(25))),
+      ),
       initialSelection: TransportType.defaultType(),
       onSelected: onSelected,
       dropdownMenuEntries: [
