@@ -20,21 +20,26 @@ class Tracking {
   final TrackingData trackingData;
   TransportType? currentlyTracking;
   Timer? currentlyTrackingTimer;
+  /// Total seconds spend in current travel until [stopTracking] is called.
+  /// 
+  /// Does not care about which [TransportType] is selected.
+  int timeTracked = 0;
 
   void recordTime(TransportType tt, Seconds amount) {
     trackingData[tt] = trackingData[tt] + amount;
   }
 
   // TODO
-  void startTracking(TransportType tt) {
+  void startTracking(TransportType tt, void Function() callback) {
     if (tt != currentlyTracking) {
-      if (currentlyTrackingTimer != null) {
-        currentlyTrackingTimer!.cancel();
-      }
       currentlyTracking = tt;
-      currentlyTrackingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-        print("Hi - $currentlyTracking");
+      
+      currentlyTrackingTimer ??= Timer.periodic(Duration(seconds: 1), (timer) {
+        recordTime(currentlyTracking!, 1);
+        timeTracked++;
+        callback();
       });
+    
     }
   }
 
@@ -44,5 +49,6 @@ class Tracking {
       currentlyTrackingTimer!.cancel();
     }
     currentlyTrackingTimer = null;
+    timeTracked = 0;
   }
 }

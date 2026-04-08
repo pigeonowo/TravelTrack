@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:travel_track/control_panel.dart';
 
@@ -29,6 +31,8 @@ class _MainAppState extends State<MainApp> {
   void _initState() async {
     var td = await TrackingData.getInstance();
     var trcking = await Tracking.getInstance();
+    // Update ui periodically
+    Timer.periodic(Duration(minutes: 1), (timer) => setState(() {}));
     setState(() {
       trackingData = td;
       tracking = trcking;
@@ -71,55 +75,57 @@ class _MainAppState extends State<MainApp> {
               ),
             ),
             Container(height: 30),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                spacing: 5,
-                children: [
-                  Row(
-                    spacing: 5,
-                    children: [
-                      TransportTypeStatDisplay(
-                        transportType: .walking,
-                        seconds: trackingData != null
-                            ? trackingData![.walking]
-                            : 0,
-                      ),
-                      TransportTypeStatDisplay(
-                        transportType: .waiting,
-                        seconds: trackingData != null
-                            ? trackingData![.waiting]
-                            : 0,
-                      ),
-                      TransportTypeStatDisplay(
-                        transportType: .car,
-                        seconds: trackingData != null ? trackingData![.car] : 0,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    spacing: 5,
-                    children: [
-                      TransportTypeStatDisplay(
-                        transportType: .bus,
-                        seconds: trackingData != null ? trackingData![.bus] : 0,
-                      ),
-                      //TransportTypeStatDisplay(transportType: .bus, hours: 11.3),
-                      TransportTypeStatDisplay(
-                        transportType: .plane,
-                        seconds: trackingData != null
-                            ? trackingData![.plane]
-                            : 0,
-                      ),
-                      TransportTypeStatDisplay(
-                        transportType: .train,
-                        seconds: trackingData != null
-                            ? trackingData![.train]
-                            : 0,
-                      ),
-                    ],
-                  ),
-                ],
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  spacing: 5,
+                  children: [
+                    Row(
+                      spacing: 5,
+                      children: [
+                        TransportTypeStatDisplay(
+                          transportType: .walking,
+                          seconds: trackingData != null
+                              ? trackingData![.walking]
+                              : 0,
+                        ),
+                        TransportTypeStatDisplay(
+                          transportType: .waiting,
+                          seconds: trackingData != null
+                              ? trackingData![.waiting]
+                              : 0,
+                        ),
+                        TransportTypeStatDisplay(
+                          transportType: .car,
+                          seconds: trackingData != null ? trackingData![.car] : 0,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      spacing: 5,
+                      children: [
+                        TransportTypeStatDisplay(
+                          transportType: .bus,
+                          seconds: trackingData != null ? trackingData![.bus] : 0,
+                        ),
+                        //TransportTypeStatDisplay(transportType: .bus, hours: 11.3),
+                        TransportTypeStatDisplay(
+                          transportType: .plane,
+                          seconds: trackingData != null
+                              ? trackingData![.plane]
+                              : 0,
+                        ),
+                        TransportTypeStatDisplay(
+                          transportType: .train,
+                          seconds: trackingData != null
+                              ? trackingData![.train]
+                              : 0,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             Spacer(),
