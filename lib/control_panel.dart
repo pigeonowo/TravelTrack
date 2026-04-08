@@ -16,6 +16,7 @@ class ControlPanel extends StatefulWidget {
 
 class _ControlPanelState extends State<ControlPanel> {
   TransportType currentTransportType = TransportType.defaultType();
+  StartStop ssState = .stop;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +28,17 @@ class _ControlPanelState extends State<ControlPanel> {
     );
   }
 
-  void onTransportType(TransportType tt) {
+  void onTransportType(TransportType tt) async {
     currentTransportType = tt;
-    // TODO: if is already tracking, stop current one and start tracking the selected transport type
+    var i = await Tracking.getInstance();
+    if (ssState == .start) {
+      i.startTracking(tt);
+    }
   }
 
   void onStartStop(StartStop ss) async {
     var i = await Tracking.getInstance();
+    ssState = ss;
     if (ss == .start) {
       i.startTracking(currentTransportType);
     } else {

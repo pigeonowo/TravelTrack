@@ -25,11 +25,24 @@ class Tracking {
     trackingData[tt] = trackingData[tt] + amount;
   }
 
+  // TODO
   void startTracking(TransportType tt) {
-    currentlyTrackingTimer = Timer.periodic(.new(seconds: 1), (timer) {
-      print("Hi");
-    });
+    if (tt != currentlyTracking) {
+      if (currentlyTrackingTimer != null) {
+        currentlyTrackingTimer!.cancel();
+      }
+      currentlyTracking = tt;
+      currentlyTrackingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+        print("Hi - $currentlyTracking");
+      });
+    }
   }
 
-  void stopTracking(TransportType tt) {}
+  void stopTracking(TransportType tt) {
+    currentlyTracking = null;
+    if (currentlyTrackingTimer != null) {
+      currentlyTrackingTimer!.cancel();
+    }
+    currentlyTrackingTimer = null;
+  }
 }
